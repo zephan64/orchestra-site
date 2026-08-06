@@ -1,6 +1,9 @@
 ---
+import "../styles/global.css";
+
 const pageTitle = "Homepage";
 ---
+
 <a href="/">Home</a>
 <a href="/about/">About</a>
 <a href="/blog">Blog</a>
@@ -10,11 +13,11 @@ const pageTitle = "Homepage";
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} >
+    <meta name="generator" content={Astro.generator} />
     <title>{pageTitle}</title>
   </head>
   <body>
-	<h1>{pageTitle}</h1>
-	<p>da homepage</p>
+    <h1>{pageTitle}</h1>
+    <p>da homepage</p>
   </body>
 </html>
