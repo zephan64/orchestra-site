@@ -1,10 +1,8 @@
 {
-  "name": "orchestra-on-the-hill-website",
+  "name": "maucariapacom-church-starter",
   "type": "module",
-  "version": "0.0.1",
-  "engines": {
-    "node": ">=22.12.0"
-  },
+  "version": "1.0.0",
+  "private": true,
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -13,8 +11,15 @@
   },
   "dependencies": {
     "@astrojs/preact": "^6.0.2",
-    "@astrojs/rss": "^4.0.19",
-    "astro": "^7.1.6",
-    "preact": "^10.29.8"
+    "@astrojs/sitemap": "^3.1.1",
+    "astro": "7.2.0",
+    "date-fns": "^3.3.1",
+    "preact": "^10.29.3",
+    "tailwindcss": "^3.4.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.16",
+    "autoprefixer": "^10.4.19",
+    "typescript": "7.0.2"
   }
 }
