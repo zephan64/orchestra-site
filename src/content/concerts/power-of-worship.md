@@ -1,12 +1,12 @@
 ---
-title: "The Power of Worship: More Than Just Music"
-date: 2025-02-16
+title: "Images 26: From Chaos to Unity"
+date: 2026-02-16
 speaker: "David Wilson"
-series: "Worship in Spirit and Truth"
-scripture: "John 4:23-24"
+series: "Images"
+location: "Ipswich Community House"
 audioUrl: "https://example.com/sermons/power-of-worship.mp3"
 videoUrl: "https://www.youtube.com/embed/example456"
-image: "/uploads/sermons/power-of-worship.webp"
+image: "/uploads/hero-bg.avif"
 summary: "Explore the true meaning of worship and how it transforms our relationship with God beyond just musical expression."
 tags: ["worship", "spiritual growth", "music"]
 draft: false

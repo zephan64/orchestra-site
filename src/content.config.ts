@@ -33,18 +33,18 @@ const eventsCollection = defineCollection({
   }),
 });
 
-const sermonsCollection = defineCollection({
-  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/content/sermons' }),
+const concertsCollection = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/content/concerts' }),
   schema: z.object({
     title: z.string(),
     slug: z.string().optional(), // Auto-generated if not provided
     date: z.date(),
     speaker: z.string(),
     series: z.string().optional(),
-    scripture: z.string().optional(),
+    location: z.string().optional(),
     audioUrl: z.string().url().optional(),
     videoUrl: z.string().url().optional(),
-    image: z.string().startsWith('/uploads/sermons/').optional(), // Thumbnail
+    image: z.string().startsWith('/uploads/').optional(), // Thumbnail
     summary: z.string().optional(),
     tags: z.array(z.string()).optional(),
     draft: z.boolean().default(false),
@@ -92,7 +92,7 @@ const siteInfoCollection = defineCollection({
 export const collections = {
   staff: staffCollection,
   events: eventsCollection,
-  sermons: sermonsCollection,
+  concerts: concertsCollection,
   ministries: ministriesCollection,
   blog: blogCollection,
   siteInfo: siteInfoCollection,

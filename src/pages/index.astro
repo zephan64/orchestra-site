@@ -2,7 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import HeroSection from "../components/Sections/HeroSection.astro";
 import EventList from "../components/Sections/EventList.astro";
-import SermonList from "../components/Sections/SermonList.astro";
+import ConcertList from "../components/Sections/ConcertList.astro";
 import ServiceCard from "../components/Cards/ServiceCard.astro";
 import FeatureCard from "../components/Cards/FeatureCard.astro";
 import Button from "../components/UI/Button.astro";
@@ -10,16 +10,16 @@ import Button from "../components/UI/Button.astro";
 
 <BaseLayout>
   <HeroSection
-    title="The Orchestra on the Hill"
-    subtitle="Performing new compositions by local composers"
+    title="An American Tapestry - The Cambodian Spirit"
+    subtitle="Upcoming Concert"
     backgroundImage="/uploads/hero-bg.avif"
-    ctaText="Buy Tickets"
+    ctaText="Get Tickets"
     ctaLink="/im-new"
     secondaryCtaText="Past Concerts"
-    secondaryCtaLink="/sermons"
+    secondaryCtaLink="/concerts"
   />
 
-  <!-- Service Times -->
+  <!-- Service Times
   <section class="py-16 bg-white">
     <div class="container">
       <div class="max-w-4xl mx-auto text-center">
@@ -47,6 +47,7 @@ import Button from "../components/UI/Button.astro";
       </div>
     </div>
   </section>
+-->
 
   <!-- About Section -->
   <section class="py-16 bg-gray-50">
@@ -54,14 +55,16 @@ import Button from "../components/UI/Button.astro";
       <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <div>
           <img
-            src="/uploads/church-default.webp"
-            alt="Our Church"
+            src="/uploads/orchestra-group.jpg"
+            alt="Our Orchestra"
             class="rounded-lg shadow-lg object-cover w-full h-full"
           />
         </div>
 
         <div>
-          <h2 class="text-3xl md:text-4xl font-bold mb-6">About Our Orchestra</h2>
+          <h2 class="text-3xl md:text-4xl font-bold mb-6">
+            About Our Orchestra
+          </h2>
           <p class="text-gray-700 mb-6 text-lg">
             We are a welcoming Christian community dedicated to sharing God's
             love through worship, fellowship, and service. Our church has been
@@ -84,9 +87,8 @@ import Button from "../components/UI/Button.astro";
   <EventList />
 
   <!-- Sermons Section -->
-  <SermonList />
+  <ConcertList />
 
-  
   <!-- Ministries Preview
   <section class="py-16 bg-gray-50">
     <div class="container">

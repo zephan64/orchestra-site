@@ -4,27 +4,27 @@ import type { CollectionEntry } from "astro:content";
 import { formatDate } from "../../utils/dateUtils";
 
 export interface Props {
-  sermon: CollectionEntry<"sermons">;
+  concert: CollectionEntry<"concerts">;
 }
 
-const { sermon } = Astro.props;
-const formattedDate = formatDate(sermon.data.date);
+const { concert } = Astro.props;
+const formattedDate = formatDate(concert.data.date);
 ---
 
 <div class="bg-gray-50 p-6 rounded-lg shadow-sm sticky top-24">
-  <h3 class="font-bold mb-4">Sermon Information</h3>
+  <h3 class="font-bold mb-4">Concert Information</h3>
 
   <div class="space-y-4 mb-6">
     <div>
-      <h4 class="font-bold text-gray-700 mb-1">Speaker</h4>
-      <p>{sermon.data.speaker}</p>
+      <h4 class="font-bold text-gray-700 mb-1">Featured Artist</h4>
+      <p>{concert.data.speaker}</p>
     </div>
 
     {
-      sermon.data.series && (
+      concert.data.series && (
         <div>
           <h4 class="font-bold text-gray-700 mb-1">Series</h4>
-          <p>{sermon.data.series}</p>
+          <p>{concert.data.series}</p>
         </div>
       )
     }
@@ -35,20 +35,20 @@ const formattedDate = formatDate(sermon.data.date);
     </div>
 
     {
-      sermon.data.scripture && (
+      concert.data.location && (
         <div>
-          <h4 class="font-bold text-gray-700 mb-1">Scripture</h4>
-          <p>{sermon.data.scripture}</p>
+          <h4 class="font-bold text-gray-700 mb-1">Location</h4>
+          <p>{concert.data.location}</p>
         </div>
       )
     }
 
     {
-      sermon.data.tags && sermon.data.tags.length > 0 && (
+      concert.data.tags && concert.data.tags.length > 0 && (
         <div>
           <h4 class="font-bold text-gray-700 mb-2">Tags</h4>
           <div class="flex flex-wrap gap-2">
-            {sermon.data.tags.map((tag) => (
+            {concert.data.tags.map((tag) => (
               <span class="px-2 py-1 text-xs font-medium text-primary-700 bg-primary-100 rounded-full">
                 {tag}
               </span>
@@ -60,9 +60,9 @@ const formattedDate = formatDate(sermon.data.date);
   </div>
 
   <div class="flex flex-col space-y-3">
-    <Button href="/sermons" variant="outline"> Back to All Sermons </Button>
+    <Button href="/concerts" variant="outline"> Back to All Concerts </Button>
 
-    <Button href="/contact?subject=Sermon+Question" variant="outline">
+    <Button href="/contact?subject=Concert+Question" variant="outline">
       Have a Question?
     </Button>
   </div>

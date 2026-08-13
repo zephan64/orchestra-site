@@ -3,13 +3,9 @@
 const navItems = [
   { text: "Home", href: "/" },
   { text: "About Us", href: "/about-us" },
-  { text: "Staff", href: "/staff" },
-  { text: "Sermons", href: "/sermons" },
   { text: "Events", href: "/events" },
-  { text: "Blog", href: "/blog" },
-  { text: "I'm New", href: "/im-new" },
+  { text: "Past Performances", href: "/concerts" },
   { text: "Contact", href: "/contact" },
-  { text: "Giving", href: "/giving" },
 ];
 
 // Get the current URL path to highlight the active link
@@ -18,12 +14,13 @@ const currentPath = Astro.url.pathname;
 
 <!-- Desktop Navigation -->
 <nav class="hidden lg:block">
-  <ul class="flex items-center space-x-6">
+  <ul class="flex items-center space-x-10">
     {
       navItems.map((item) => {
-        const isActive = currentPath === item.href || 
-                         (item.href !== "/" && currentPath.startsWith(item.href));
-        
+        const isActive =
+          currentPath === item.href ||
+          (item.href !== "/" && currentPath.startsWith(item.href));
+
         return (
           <li>
             <a
@@ -39,6 +36,9 @@ const currentPath = Astro.url.pathname;
         );
       })
     }
+    <li>
+      <a href="/giving" class="btn btn-primary">Donate</a>
+    </li>
   </ul>
 </nav>
 
@@ -49,8 +49,18 @@ const currentPath = Astro.url.pathname;
   aria-label="Toggle Menu"
   aria-expanded="false"
 >
-  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="h-6 w-6"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M4 6h16M4 12h16M4 18h16"></path>
   </svg>
 </button>
 
@@ -66,15 +76,16 @@ const currentPath = Astro.url.pathname;
     <div class="grid grid-cols-2 gap-3">
       {
         navItems.map((item) => {
-          const isActive = currentPath === item.href || 
-                           (item.href !== "/" && currentPath.startsWith(item.href));
-          
+          const isActive =
+            currentPath === item.href ||
+            (item.href !== "/" && currentPath.startsWith(item.href));
+
           return (
             <a
               href={item.href}
               class={`block px-4 py-3 text-sm font-medium rounded-lg transition-colors text-center ${
-                isActive 
-                  ? "bg-primary-50 text-primary-600 border border-primary-200" 
+                isActive
+                  ? "bg-primary-50 text-primary-600 border border-primary-200"
                   : "text-gray-700 hover:bg-gray-50 hover:text-primary-600 border border-transparent"
               }`}
               role="menuitem"
@@ -94,21 +105,21 @@ const currentPath = Astro.url.pathname;
   #mobile-menu-button:hover svg {
     transform: scale(1.1);
   }
-  
+
   #mobile-menu-button svg {
     transition: transform 0.2s ease;
   }
-  
+
   /* Mobile menu show/hide states */
   #mobile-menu.show {
     transform: scaleY(1);
   }
-  
+
   /* Smooth hover effects */
   #mobile-menu a {
     transition: all 0.15s ease;
   }
-  
+
   /* Active state styling */
   #mobile-menu a[aria-current="page"] {
     font-weight: 600;
@@ -117,61 +128,65 @@ const currentPath = Astro.url.pathname;
 
 <script>
   // Mobile menu functionality
-  document.addEventListener('DOMContentLoaded', () => {
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
+  document.addEventListener("DOMContentLoaded", () => {
+    const mobileMenuButton = document.getElementById("mobile-menu-button");
+    const mobileMenu = document.getElementById("mobile-menu");
 
-    if(!mobileMenuButton || !mobileMenu) return;
-    
+    if (!mobileMenuButton || !mobileMenu) return;
+
     let isMenuOpen = false;
-    
+
     // Function to toggle mobile menu
     const toggleMobileMenu = () => {
       isMenuOpen = !isMenuOpen;
-      
+
       if (isMenuOpen) {
         // Show menu
-        mobileMenu.classList.add('show');
-        mobileMenuButton.setAttribute('aria-expanded', 'true');
+        mobileMenu.classList.add("show");
+        mobileMenuButton.setAttribute("aria-expanded", "true");
       } else {
         // Hide menu
-        mobileMenu.classList.remove('show');
-        mobileMenuButton.setAttribute('aria-expanded', 'false');
+        mobileMenu.classList.remove("show");
+        mobileMenuButton.setAttribute("aria-expanded", "false");
       }
     };
-    
+
     // Event listeners
-    mobileMenuButton.addEventListener('click', (e) => {
+    mobileMenuButton.addEventListener("click", (e) => {
       e.stopPropagation();
       toggleMobileMenu();
     });
-    
+
     // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-      if (isMenuOpen && !mobileMenu.contains(e.target as Node) && !mobileMenuButton.contains(e.target as Node)) {
+    document.addEventListener("click", (e) => {
+      if (
+        isMenuOpen &&
+        !mobileMenu.contains(e.target as Node) &&
+        !mobileMenuButton.contains(e.target as Node)
+      ) {
         toggleMobileMenu();
       }
     });
-    
+
     // Close menu when clicking a navigation link
     const navLinks = mobileMenu.querySelectorAll('a[href^="/"]');
-    navLinks?.forEach(link => {
-      link.addEventListener('click', () => {
+    navLinks?.forEach((link) => {
+      link.addEventListener("click", () => {
         if (isMenuOpen) {
           setTimeout(() => toggleMobileMenu(), 100);
         }
       });
     });
-    
+
     // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && isMenuOpen) {
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && isMenuOpen) {
         toggleMobileMenu();
       }
     });
-    
+
     // Handle window resize
-    window.addEventListener('resize', () => {
+    window.addEventListener("resize", () => {
       if (window.innerWidth >= 1024 && isMenuOpen) {
         toggleMobileMenu();
       }

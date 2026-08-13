@@ -1,0 +1,57 @@
+---
+import { getCollection } from "astro:content";
+import ConcertCard from "../Cards/ConcertCard.astro";
+import Button from "../UI/Button.astro";
+
+export interface Props {
+  count?: number;
+  showViewAll?: boolean;
+}
+
+const { count = 3, showViewAll = true } = Astro.props;
+
+// Get concerts sorted by date (newest first)
+const allConcerts = await getCollection("concerts", ({ data }) => {
+  return import.meta.env.PROD ? !data.draft : true;
+});
+
+// Sort by date (newest first)
+const concerts = allConcerts
+  .sort(
+    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+  )
+  .slice(0, count);
+---
+
+<section class="py-16 bg-white">
+  <div class="container">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Recent Concerts</h2>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        Explore our latest performances and upcoming events
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {
+        concerts.map((concert) => (
+          <ConcertCard
+            concert={concert}
+            className="shadow-none"
+            imageSrc={concert.data.image || "/uploads/concert-placeholder.webp"}
+          />
+        ))
+      }
+    </div>
+
+    {
+      showViewAll && concerts.length > 0 && (
+        <div class="mt-12 text-center">
+          <Button href="/concerts" variant="outline">
+            View All Concerts
+          </Button>
+        </div>
+      )
+    }
+  </div>
+</section>

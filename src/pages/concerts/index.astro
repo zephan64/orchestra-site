@@ -1,0 +1,264 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHeader from "../../components/Sections/PageHeader.astro";
+import ConcertCard from "../../components/Cards/ConcertCard.astro";
+import { getCollection } from "astro:content";
+
+// Get all concerts
+const allConcerts = await getCollection("concerts", ({ data }) => {
+  return import.meta.env.PROD ? !data.draft : true;
+});
+
+// Sort by date (newest first)
+const concerts = allConcerts.sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+);
+
+// Get unique series and speakers for filters
+const series = [
+  ...new Set(concerts.map((concert) => concert.data.series).filter(Boolean)),
+];
+const speakers = [...new Set(concerts.map((concert) => concert.data.speaker))];
+---
+
+<BaseLayout
+  title="Past Performances - The Orchestra on the Hill"
+  description="Explore our archive of past concerts and performances."
+>
+  <PageHeader
+    title="Past Performances"
+    subtitle="Explore our concert archive"
+    backgroundImage="/uploads/concerts-header-bg.webp"
+  />
+
+  <!-- Concerts List -->
+  <section class="py-16">
+    <div class="container">
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <!-- Filters Sidebar -->
+        <div class="lg:col-span-1">
+          <div class="bg-white p-6 rounded-lg shadow-sm sticky top-24">
+            <h2 class="text-xl font-bold mb-6">Filter Performances</h2>
+
+            <!-- Search -->
+            <div class="mb-6">
+              <label
+                for="search"
+                class="block text-sm font-medium text-gray-700 mb-1"
+                >Search</label
+              >
+              <input
+                type="text"
+                id="search"
+                placeholder="Search performances..."
+                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
+              />
+            </div>
+
+            <!-- Series Filter -->
+            {
+              series.length > 0 && (
+                <div class="mb-6">
+                  <label
+                    for="series"
+                    class="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Series
+                  </label>
+                  <select
+                    id="series"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
+                  >
+                    <option value="">All Series</option>
+                    {series.map((s) => (
+                      <option value={s}>{s}</option>
+                    ))}
+                  </select>
+                </div>
+              )
+            }
+
+            <!-- Speaker Filter -->
+            {
+              speakers.length > 0 && (
+                <div class="mb-6">
+                  <label
+                    for="speaker"
+                    class="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Featured Artist
+                  </label>
+                  <select
+                    id="speaker"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
+                  >
+                    <option value="">All Artists</option>
+                    {speakers.map((s) => (
+                      <option value={s}>{s}</option>
+                    ))}
+                  </select>
+                </div>
+              )
+            }
+
+            <!-- Date Range Filter -->
+            <div class="space-y-3">
+              <label class="block text-sm font-medium text-gray-700"
+                >Date Range</label
+              >
+
+              <div>
+                <label for="from-date" class="block text-xs text-gray-500 mb-1"
+                  >From</label
+                >
+                <input
+                  type="date"
+                  id="from-date"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
+                />
+              </div>
+
+              <div>
+                <label for="to-date" class="block text-xs text-gray-500 mb-1"
+                  >To</label
+                >
+                <input
+                  type="date"
+                  id="to-date"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
+                />
+              </div>
+            </div>
+
+            <!-- Reset Filters Button -->
+            <button
+              id="reset-filters"
+              class="w-full mt-6 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+            >
+              Reset Filters
+            </button>
+          </div>
+        </div>
+
+        <!-- Concerts Grid -->
+        <div class="lg:col-span-3">
+          <h2 class="text-2xl font-bold mb-6">All Concerts</h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="concerts-grid">
+            {
+              concerts.map((concert) => (
+                <ConcertCard concert={concert} className="concert-card" />
+              ))
+            }
+          </div>
+
+          <!-- No Results Message (Hidden by default) -->
+          <div
+            id="no-results"
+            class="hidden text-center py-12 bg-gray-50 rounded-lg mt-8"
+          >
+            <p class="text-gray-600">
+              No concerts match your search criteria. Please try different
+              filters.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Filter functionality
+    document.addEventListener("DOMContentLoaded", () => {
+      const searchInput = document.getElementById(
+        "search",
+      ) as HTMLInputElement | null;
+      const seriesSelect = document.getElementById(
+        "series",
+      ) as HTMLSelectElement | null;
+      const speakerSelect = document.getElementById(
+        "speaker",
+      ) as HTMLSelectElement | null;
+      const fromDateInput = document.getElementById(
+        "from-date",
+      ) as HTMLInputElement | null;
+      const toDateInput = document.getElementById(
+        "to-date",
+      ) as HTMLInputElement | null;
+      const resetButton = document.getElementById("reset-filters");
+      const concertsGrid = document.getElementById("concerts-grid");
+      const noResults = document.getElementById(
+        "no-results",
+      ) as HTMLElement | null;
+      const concertCards =
+        document.querySelectorAll<HTMLElement>(".concert-card");
+
+      // Function to filter concerts
+      const filterConcerts = () => {
+        const searchTerm = searchInput?.value.toLowerCase() || "";
+        const selectedSeries = seriesSelect?.value || "";
+        const selectedSpeaker = speakerSelect?.value || "";
+        const fromDate = fromDateInput?.value || "";
+        const toDate = toDateInput?.value || "";
+
+        let visibleCount = 0;
+
+        concertCards.forEach((card) => {
+          const title =
+            card.querySelector("h3")?.textContent?.toLowerCase() || "";
+          const summary =
+            card.querySelector("p")?.textContent?.toLowerCase() || "";
+          const series = card.getAttribute("data-series") || "";
+          const speaker = card.getAttribute("data-speaker") || "";
+          const date = card.getAttribute("data-date") || "";
+
+          // Check if concert matches all filters
+          const matchesSearch =
+            title.includes(searchTerm) || summary.includes(searchTerm);
+          const matchesSeries = !selectedSeries || series === selectedSeries;
+          const matchesSpeaker =
+            !selectedSpeaker || speaker === selectedSpeaker;
+          const matchesFromDate = !fromDate || date >= fromDate;
+          const matchesToDate = !toDate || date <= toDate;
+
+          // Show/hide the concert card
+          if (
+            matchesSearch &&
+            matchesSeries &&
+            matchesSpeaker &&
+            matchesFromDate &&
+            matchesToDate
+          ) {
+            card.style.display = "block";
+            visibleCount++;
+          } else {
+            card.style.display = "none";
+          }
+        });
+
+        // Show/hide no results message
+        if (noResults) {
+          noResults.style.display = visibleCount === 0 ? "block" : "none";
+        }
+      };
+
+      // Add event listeners
+      searchInput?.addEventListener("input", filterConcerts);
+      seriesSelect?.addEventListener("change", filterConcerts);
+      speakerSelect?.addEventListener("change", filterConcerts);
+      fromDateInput?.addEventListener("change", filterConcerts);
+      toDateInput?.addEventListener("change", filterConcerts);
+
+      // Reset filters
+      resetButton?.addEventListener("click", () => {
+        if (searchInput) searchInput.value = "";
+        if (seriesSelect) seriesSelect.value = "";
+        if (speakerSelect) speakerSelect.value = "";
+        if (fromDateInput) fromDateInput.value = "";
+        if (toDateInput) toDateInput.value = "";
+
+        filterConcerts();
+      });
+    });
+  </script>
+  </BaseLayout>

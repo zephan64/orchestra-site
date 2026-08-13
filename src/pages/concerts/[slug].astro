@@ -2,18 +2,18 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHeader from "../../components/Sections/PageHeader.astro";
 import Button from "../../components/UI/Button.astro";
-import SermonInfoCard from "../../components/Cards/SermonInfoCard.astro";
+import ConcertInfoCard from "../../components/Cards/ConcertInfoCard.astro";
 import CompactLinkCard from "../../components/Cards/CompactLinkCard.astro";
-import { getCollection, render } from "astro:content";
+import { getCollection, render, type CollectionEntry } from "astro:content";
 import { formatDate } from "../../utils/dateUtils";
 
 export async function getStaticPaths() {
   try {
-    const sermonEntries = await getCollection("sermons", ({ data }) => {
+    const concertEntries = await getCollection("concerts", ({ data }) => {
       return import.meta.env.PROD ? !data.draft : true;
     });
 
-    return sermonEntries.map((entry) => ({
+    return concertEntries.map((entry) => ({
       params: { slug: entry.id },
       props: { entry },
     }));
@@ -25,17 +25,17 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content, headings } = await render(entry);
 
-let relatedSermons = [];
+let relatedConcerts: CollectionEntry<"concerts">[] = [];
 if (entry.data.series) {
   try {
-    const allSermons = await getCollection("sermons", ({ data }) => {
+    const allConcerts = await getCollection("concerts", ({ data }) => {
       return import.meta.env.PROD ? !data.draft : true;
     });
 
-    relatedSermons = allSermons
+    relatedConcerts = allConcerts
       .filter(
-        (sermon) =>
-          sermon.data.series === entry.data.series && sermon.id !== entry.id,
+        (concert) =>
+          concert.data.series === entry.data.series && concert.id !== entry.id,
       )
       .sort(
         (a, b) =>
@@ -43,15 +43,15 @@ if (entry.data.series) {
       )
       .slice(0, 3);
   } catch (error) {
-    console.log("Error fetching related sermons");
+    console.log("Error fetching related concerts");
   }
 }
 ---
 
 <BaseLayout
-  title={`${entry.data.title} - Sermons - Church Name`}
+  title={`${entry.data.title} - Concerts - The Orchestra on the Hill`}
   description={entry.data.summary ||
-    `Listen to "${entry.data.title}" by ${entry.data.speaker}`}
+    `Learn more about "${entry.data.title}" featuring ${entry.data.speaker}`}
   image={entry.data.image
     ? { url: entry.data.image, alt: entry.data.title }
     : undefined}
@@ -60,7 +60,7 @@ if (entry.data.series) {
   <PageHeader
     title={entry.data.title}
     subtitle={entry.data.summary}
-    backgroundImage={entry.data.image || "/uploads/sermons-header-bg.webp"}
+    backgroundImage={entry.data.image || "/uploads/concerts-header-bg.webp"}
   />
 
   <section class="py-16">
@@ -103,16 +103,16 @@ if (entry.data.series) {
           </div>
 
           {
-            relatedSermons.length > 0 && (
+            relatedConcerts.length > 0 && (
               <div class="mt-12">
                 <h2 class="text-2xl font-bold mb-6">More From This Series</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {relatedSermons.map((sermon) => (
+                  {relatedConcerts.map((concert) => (
                     <CompactLinkCard
-                      href={`/sermons/${sermon.id}`}
-                      title={sermon.data.title}
-                      meta={formatDate(sermon.data.date)}
-                      linkText="Listen/Watch"
+                      href={`/concerts/${concert.id}`}
+                      title={concert.data.title}
+                      meta={formatDate(concert.data.date)}
+                      linkText="Learn More"
                     />
                   ))}
                 </div>
@@ -123,7 +123,7 @@ if (entry.data.series) {
 
         <div>
           <div class="sticky top-24 mb-6">
-            <SermonInfoCard sermon={entry} />
+            <ConcertInfoCard concert={entry} />
           </div>
         </div>
       </div>
