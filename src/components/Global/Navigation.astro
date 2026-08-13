@@ -2,8 +2,8 @@
 // Define the navigation items
 const navItems = [
   { text: "Home", href: "/" },
+  { text: "Upcoming Events", href: "/events" },
   { text: "About Us", href: "/about-us" },
-  { text: "Events", href: "/events" },
   { text: "Past Performances", href: "/concerts" },
   { text: "Contact", href: "/contact" },
 ];
@@ -96,6 +96,7 @@ const currentPath = Astro.url.pathname;
           );
         })
       }
+      <a href="/giving" class="btn btn-primary w-full justify-center">Donate</a>
     </div>
   </div>
 </div>

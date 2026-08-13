@@ -10,8 +10,8 @@ import Button from "../components/UI/Button.astro";
 
 <BaseLayout>
   <HeroSection
-    title="An American Tapestry - The Cambodian Spirit"
-    subtitle="Upcoming Concert"
+    title="The Orchestra on the Hill"
+    subtitle="Thomas Palance / Artistic Director"
     backgroundImage="/uploads/hero-bg.avif"
     ctaText="Get Tickets"
     ctaLink="/im-new"
@@ -49,6 +49,9 @@ import Button from "../components/UI/Button.astro";
   </section>
 -->
 
+  <!-- Upcoming Events Section -->
+  <EventList />
+
   <!-- About Section -->
   <section class="py-16 bg-gray-50">
     <div class="container">
@@ -66,15 +69,16 @@ import Button from "../components/UI/Button.astro";
             About Our Orchestra
           </h2>
           <p class="text-gray-700 mb-6 text-lg">
-            We are a welcoming Christian community dedicated to sharing God's
-            love through worship, fellowship, and service. Our church has been
-            serving the community for over 50 years, providing a place for
-            spiritual growth and connection.
+            The Orchestra On The Hill is a regional arts organization based in
+            Ipswich, MA devoted to producing interdisciplinary performances
+            featuring the highest professional musicianship as well as
+            performance art.
           </p>
           <p class="text-gray-700 mb-8 text-lg">
-            Whether you're exploring faith for the first time or looking for a
-            church home, we invite you to join us. Our diverse congregation
-            welcomes people of all ages, backgrounds, and walks of life.
+            Our mission is to contribute to the cultural enrichment of the North
+            Shore of Massachusetts and beyond through exceptional concerts of
+            orchestral music while showcasing other local artists including the
+            visual arts, dance, poetry, animation and photography.
           </p>
 
           <Button href="/about-us"> Learn More About Us </Button>
@@ -83,10 +87,7 @@ import Button from "../components/UI/Button.astro";
     </div>
   </section>
 
-  <!-- Events Section -->
-  <EventList />
-
-  <!-- Sermons Section -->
+  <!-- Concerts Section -->
   <ConcertList />
 
   <!-- Ministries Preview
@@ -183,7 +184,7 @@ import Button from "../components/UI/Button.astro";
   </section>
 -->
 
-  <!-- Call to Action -->
+  <!-- Call to Action
   <section
     class="py-20 bg-cover bg-center text-white"
     style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(/uploads/thank-you-bg.webp)"
@@ -215,4 +216,5 @@ import Button from "../components/UI/Button.astro";
       </div>
     </div>
   </section>
+-->
 </BaseLayout>

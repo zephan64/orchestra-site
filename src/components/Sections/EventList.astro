@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import EventCard from "../Cards/EventCard.astro";
+import FeaturedEventCard from "../Cards/FeaturedEventCard.astro";
 import Button from "../UI/Button.astro";
 
 export interface Props {
@@ -17,32 +18,54 @@ const allEvents = await getCollection("events", ({ data }) => {
 
 // Sort by date (upcoming first)
 const events = allEvents
-  .sort((a, b) => new Date(a.data.date).getTime() - new Date(b.data.date).getTime())
-  .filter(event => new Date(event.data.date) >= new Date()) // Only future events
+  .filter((event) => new Date(event.data.date) >= new Date()) // Only future events
+  .sort(
+    (a, b) => new Date(a.data.date).getTime() - new Date(b.data.date).getTime(),
+  )
   .slice(0, count);
 ---
 
-<section class="py-16 bg-gray-50">
+<section class="py-16 bg-white">
   <div class="container">
+    <!--
     <div class="text-center mb-12">
-      <h2 class="text-3xl md:text-4xl font-bold mb-4">Upcoming Events</h2>
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Upcoming Event</h2>
       <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-        Join us for these upcoming events and become part of our community
+        Join us for our next performance
       </p>
     </div>
-    
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {events.map((event) => (
-        <EventCard event={event} variant="upcoming" />
-      ))}
-    </div>
-    
-    {showViewAll && events.length > 0 && (
-      <div class="mt-12 text-center">
-        <Button href="/events" variant="outline">
-          View All Events
-        </Button>
-      </div>
-    )}
+  -->
+
+    {
+      events.length > 0 ? (
+        <>
+          <FeaturedEventCard event={events[0]} />
+
+          {events.length > 1 && (
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+              {events.slice(1).map((event) => (
+                <EventCard event={event} variant="upcoming" />
+              ))}
+            </div>
+          )}
+        </>
+      ) : (
+        <div class="text-center py-12 bg-white rounded-lg">
+          <p class="text-gray-600">
+            No upcoming events scheduled right now — check back soon!
+          </p>
+        </div>
+      )
+    }
+
+    {
+      showViewAll && events.length > 0 && (
+        <div class="mt-12 text-center">
+          <Button href="/events" variant="outline">
+            View All Events
+          </Button>
+        </div>
+      )
+    }
   </div>
 </section>

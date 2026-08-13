@@ -8,11 +8,19 @@ import { format, parseISO } from "date-fns";
  */
 export function formatDate(date, formatStr = "MMMM d, yyyy") {
   if (!date) return "";
-  
+
   // If date is a string, parse it
   const dateObj = typeof date === "string" ? parseISO(date) : date;
-  
-  return format(dateObj, formatStr);
+
+  // Re-anchor to local midnight using UTC components, so displaying
+  // doesn't shift the date backward due to timezone conversion
+  const adjustedDate = new Date(
+    dateObj.getUTCFullYear(),
+    dateObj.getUTCMonth(),
+    dateObj.getUTCDate()
+  );
+
+  return format(adjustedDate, formatStr);
 }
 
 /**
@@ -22,10 +30,10 @@ export function formatDate(date, formatStr = "MMMM d, yyyy") {
  */
 export function isFutureDate(date) {
   if (!date) return false;
-  
+
   // If date is a string, parse it
   const dateObj = typeof date === "string" ? parseISO(date) : date;
-  
+
   return dateObj > new Date();
 }
 
@@ -36,9 +44,9 @@ export function isFutureDate(date) {
  */
 export function isPastDate(date) {
   if (!date) return false;
-  
+
   // If date is a string, parse it
   const dateObj = typeof date === "string" ? parseISO(date) : date;
-  
+
   return dateObj < new Date();
 }
