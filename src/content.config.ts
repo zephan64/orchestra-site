@@ -20,11 +20,16 @@ const eventsCollection = defineCollection({
   loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/content/events' }),
   schema: z.object({
     title: z.string(),
-    date: z.date(), // Event start date
-    endDate: z.date().optional(), // Event end date
-    time: z.string().optional(), // e.g., "09:00 AM - 11:00 AM"
+    date: z.date(),
+    endDate: z.date().optional(),
+    time: z.string().optional(),
     location: z.string(),
-    image: z.string().startsWith('/uploads/events/'),
+    showtimes: z.array(z.object({
+      date: z.date(),
+      time: z.string(),
+      location: z.string(),
+    })).optional(),
+    image: z.string().startsWith('/uploads/').optional(),
     summary: z.string(),
     tags: z.array(z.string()).optional(),
     registrationLink: z.string().url().optional(),
