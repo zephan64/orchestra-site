@@ -12,7 +12,7 @@ showtimes:
     time: "3:00 PM"
     location: "Lowell HS Auditorium"
 image: "/uploads/events/cambodian-spirit-eventbrite.jpg"
-summary: "Come experience The Cambodian Spirit – a story of heritage, resilience, beauty, and renewal"
+summary: ""
 tags: []
 registrationRequired: true
 registrationLink: "https://www.eventbrite.com/e/an-american-tapestry-the-cambodian-spirit-tickets-2000030584317"

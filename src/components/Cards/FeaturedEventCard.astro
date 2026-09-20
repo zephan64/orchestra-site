@@ -12,9 +12,9 @@ const formattedDate = formatDate(event.data.date, "MMMM d");
 ---
 
 <div
-    class="grid grid-cols-1 md:grid-cols-5 rounded-xl overflow-hidden shadow-lg bg-white"
+    class="grid grid-cols-1 md:grid-cols-8 rounded-xl overflow-hidden shadow-lg bg-white"
 >
-    <div class="md:col-span-3 aspect-video md:aspect-auto md:h-full">
+    <div class="md:col-span-5 h-64 md:h-[24rem]">
         <img
             src={event.data.image}
             alt={event.data.title}
@@ -22,7 +22,7 @@ const formattedDate = formatDate(event.data.date, "MMMM d");
         />
     </div>
 
-    <div class="md:col-span-2 p-8 md:p-10 flex flex-col justify-center">
+    <div class="md:col-span-3 p-8 md:p-10 flex flex-col justify-center">
         <p
             class="text-primary-600 font-semibold uppercase tracking-wide text-md mb-2"
         >

@@ -44,7 +44,7 @@ const concertsCollection = defineCollection({
     title: z.string(),
     slug: z.string().optional(), // Auto-generated if not provided
     date: z.date(),
-    speaker: z.string(),
+    speaker: z.string().optional(),
     series: z.string().optional(),
     location: z.string().optional(),
     audioUrl: z.string().url().optional(),
