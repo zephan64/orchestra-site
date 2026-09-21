@@ -2,7 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHeader from "../components/Sections/PageHeader.astro";
 import Button from "../components/UI/Button.astro";
-import InfoCard from "../components/Cards/InfoCard.astro";
+import NewsletterSignup from "../components/Sections/NewsletterSignup.astro";
 ---
 
 <BaseLayout
@@ -11,7 +11,7 @@ import InfoCard from "../components/Cards/InfoCard.astro";
 >
   <PageHeader
     title="Contact Us"
-    subtitle="We'd love to hear from you"
+    subtitle="We'd love to hear from you!"
     backgroundImage="/uploads/redyellow-painting.jpg"
     backgroundPosition="center 40%"
   />
@@ -24,7 +24,16 @@ import InfoCard from "../components/Cards/InfoCard.astro";
         <div>
           <h2 class="text-3xl font-bold mb-6">Send Us a Message</h2>
 
-          <form id="contact-form" class="space-y-6">
+          <form
+            id="contact-form"
+            name="contact"
+            method="POST"
+            data-netlify="true"
+            action="/thank-you"
+            class="space-y-6"
+          >
+            <input type="hidden" name="form-name" value="contact" />
+
             <div>
               <label
                 for="name"
@@ -39,56 +48,35 @@ import InfoCard from "../components/Cards/InfoCard.astro";
               />
             </div>
 
-            <div>
-              <label
-                for="email"
-                class="block text-sm font-medium text-gray-700 mb-1"
-                >Email</label
-              >
-              <input
-                type="email"
-                id="email"
-                name="email"
-                required
-                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
-              />
-            </div>
-
-            <div>
-              <label
-                for="phone"
-                class="block text-sm font-medium text-gray-700 mb-1"
-                >Phone (optional)</label
-              >
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
-              />
-            </div>
-
-            <div>
-              <label
-                for="subject"
-                class="block text-sm font-medium text-gray-700 mb-1"
-                >Subject</label
-              >
-              <select
-                id="subject"
-                name="subject"
-                required
-                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
-              >
-                <option value="">Please select</option>
-                <option value="General Inquiry">General Inquiry</option>
-                <option value="Concert Question">Concert Question</option>
-                <option value="Collaboration Inquiry"
-                  >Collaboration Inquiry</option
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div>
+                <label
+                  for="email"
+                  class="block text-sm font-medium text-gray-700 mb-1"
+                  >Email</label
                 >
-                <option value="Volunteering">Volunteering</option>
-                <option value="Other">Other</option>
-              </select>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
+                />
+              </div>
+
+              <div>
+                <label
+                  for="phone"
+                  class="block text-sm font-medium text-gray-700 mb-1"
+                  >Phone (optional)</label
+                >
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
+                />
+              </div>
             </div>
 
             <div>
@@ -100,32 +88,16 @@ import InfoCard from "../components/Cards/InfoCard.astro";
               <textarea
                 id="message"
                 name="message"
-                rows="5"
+                rows="3"
                 required
                 class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
               ></textarea>
             </div>
 
             <div>
-              <Button type="submit" variant="primary"> Send Message </Button>
+              <Button type="submit" variant="primary">Send Message</Button>
             </div>
           </form>
-
-          <script>
-            // Handle form submission
-            document
-              .getElementById("contact-form")
-              ?.addEventListener("submit", function (e) {
-                e.preventDefault();
-
-                // In a real implementation, you would handle the form submission here
-                // For this template, we'll just show a success message
-                alert(
-                  "Thank you for your message! We will get back to you soon.",
-                );
-                this.reset();
-              });
-          </script>
         </div>
 
         <!-- Contact Information -->
@@ -192,10 +164,10 @@ import InfoCard from "../components/Cards/InfoCard.astro";
                 <h3 class="text-xl font-bold mb-1">Email</h3>
                 <p class="text-gray-700">
                   <a
-                    href="mailto:info@orchestraonthehill.org"
+                    href="mailto:clerk@orchestraonthehill.org"
                     class="hover:text-primary-600"
                   >
-                    info@orchestraonthehill.org
+                    clerk@orchestraonthehill.org
                   </a>
                 </p>
               </div>
@@ -207,7 +179,7 @@ import InfoCard from "../components/Cards/InfoCard.astro";
             <h3 class="text-xl font-bold mb-4">Connect With Us</h3>
             <div class="flex space-x-4">
               <a
-                href="https://facebook.com/yourorchestra"
+                href="https://facebook.com/theorchestraonthehill"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="text-gray-600 hover:text-primary-600 transition-colors"
@@ -226,7 +198,7 @@ import InfoCard from "../components/Cards/InfoCard.astro";
               </a>
 
               <a
-                href="https://instagram.com/yourorchestra"
+                href="https://instagram.com/theorchestraonthehill"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="text-gray-600 hover:text-primary-600 transition-colors"
@@ -245,7 +217,7 @@ import InfoCard from "../components/Cards/InfoCard.astro";
               </a>
 
               <a
-                href="https://youtube.com/yourorchestra"
+                href="https://youtube.com/@theorchestraonthehill6149"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="text-gray-600 hover:text-primary-600 transition-colors"
@@ -269,47 +241,5 @@ import InfoCard from "../components/Cards/InfoCard.astro";
     </div>
   </section>
 
-  <!-- Newsletter Signup -->
-  <section id="newsletter" class="py-16 bg-primary-50">
-    <div class="container">
-      <div class="max-w-3xl mx-auto text-center">
-        <h2 class="text-3xl font-bold mb-4">Join Our Email List</h2>
-        <p class="text-lg text-gray-700 mb-8">
-          Stay updated with upcoming concerts, events, and news from The
-          Orchestra on the Hill.
-        </p>
-
-        <form id="newsletter-form" class="max-w-md mx-auto">
-          <div class="flex flex-col sm:flex-row gap-4">
-            <input
-              type="email"
-              id="newsletter-email"
-              placeholder="Your email address"
-              required
-              class="flex-grow px-4 py-3 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
-            />
-
-            <Button type="submit" variant="primary"> Subscribe </Button>
-          </div>
-          <p class="text-sm text-gray-600 mt-3">
-            We respect your privacy. You can unsubscribe at any time.
-          </p>
-        </form>
-
-        <script>
-          // Handle newsletter form submission
-          document
-            .getElementById("newsletter-form")
-            ?.addEventListener("submit", function (e) {
-              e.preventDefault();
-
-              // In a real implementation, you would handle the form submission here
-              // For this template, we'll just show a success message
-              alert("Thank you for subscribing to our newsletter!");
-              this.reset();
-            });
-        </script>
-      </div>
-    </div>
-  </section>
+  <NewsletterSignup />
 </BaseLayout>
