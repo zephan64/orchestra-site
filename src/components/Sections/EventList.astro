@@ -25,25 +25,21 @@ const events = allEvents
   .slice(0, count);
 ---
 
-<section class="py-16 bg-white">
+<section class="py-16 bg-gray-50">
   <div class="container">
-    <!--
-    <div class="text-center mb-12">
-      <h2 class="text-3xl md:text-4xl font-bold mb-4">Upcoming Event</h2>
-      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-        Join us for our next performance
-      </p>
-    </div>
-  -->
 
     {
       events.length > 0 ? (
         <>
-          <FeaturedEventCard event={events[0]} />
+          <div class="space-y-8">
+            {events.slice(0, 2).map((event) => (
+              <FeaturedEventCard event={event} />
+            ))}
+          </div>
 
-          {events.length > 1 && (
+          {events.length > 2 && (
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-              {events.slice(1).map((event) => (
+              {events.slice(2).map((event) => (
                 <EventCard event={event} variant="upcoming" />
               ))}
             </div>
