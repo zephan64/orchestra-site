@@ -9,20 +9,29 @@ export interface Props {
 
 const { event } = Astro.props;
 const formattedDate = formatDate(event.data.date, "MMMM d");
+const isPortrait = event.data.imageOrientation === "portrait";
 ---
 
 <div
-    class="grid grid-cols-1 md:grid-cols-8 rounded-xl overflow-hidden shadow-lg bg-white"
+    class="grid grid-cols-1 md:grid-cols-5 rounded-xl overflow-hidden shadow-lg bg-white"
 >
-    <div class="md:col-span-5 h-64 md:h-[24rem]">
+    <div class:list={[isPortrait ? "md:col-span-2" : "md:col-span-3"]}>
         <img
             src={event.data.image}
             alt={event.data.title}
-            class="w-full h-full object-cover"
+            class:list={[
+                "block w-full h-auto",
+                isPortrait && "max-w-sm md:max-w-none mx-auto",
+            ]}
         />
     </div>
 
-    <div class="md:col-span-3 p-8 md:p-10 flex flex-col justify-center">
+    <div
+        class:list={[
+            "p-8 md:p-10 flex flex-col justify-center",
+            isPortrait ? "md:col-span-3" : "md:col-span-2",
+        ]}
+    >
         <p
             class="text-primary-600 font-semibold uppercase tracking-wide text-md mb-2"
         >
@@ -106,7 +115,12 @@ const formattedDate = formatDate(event.data.date, "MMMM d");
             }
         </div>
 
-        <p class="text-gray-700 mb-8 text-lg">{event.data.summary}</p>
+        <p
+            class="text-gray-700 mb-8 text-base whitespace-pre-line"
+            set:html={event.data.summary
+                .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+                .replace(/\*(.+?)\*/g, "<em>$1</em>")}
+        />
 
         {
             event.data.registrationLink ? (
@@ -121,12 +135,12 @@ const formattedDate = formatDate(event.data.date, "MMMM d");
                 </Button>
             ) : (
                 <Button
-                    href={`/events/${event.id}`}
                     variant="outline"
                     size="lg"
-                    class="w-fit"
+                    disabled
+                    class="w-fit pointer-events-none"
                 >
-                    Details Coming Soon
+                    Tickets Coming Soon
                 </Button>
             )
         }

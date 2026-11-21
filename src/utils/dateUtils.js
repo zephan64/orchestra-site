@@ -50,3 +50,18 @@ export function isPastDate(date) {
 
   return dateObj < new Date();
 }
+
+export function formatDateRange(start, end) {
+  if (!start) return "";
+  if (!end) return formatDate(start);
+
+  const s = typeof start === "string" ? parseISO(start) : start;
+  const e = typeof end === "string" ? parseISO(end) : end;
+
+  const sameYear = s.getUTCFullYear() === e.getUTCFullYear();
+  const sameMonth = sameYear && s.getUTCMonth() === e.getUTCMonth();
+
+  if (sameMonth) return `${formatDate(s, "MMMM d")} & ${formatDate(e, "d, yyyy")}`;
+  if (sameYear) return `${formatDate(s, "MMMM d")} & ${formatDate(e, "MMMM d, yyyy")}`;
+  return `${formatDate(s)} & ${formatDate(e)}`;
+}

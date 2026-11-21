@@ -30,6 +30,7 @@ const eventsCollection = defineCollection({
       location: z.string(),
     })).optional(),
     image: z.string().startsWith('/uploads/').optional(),
+    imageOrientation: z.enum(["landscape", "portrait"]).default("landscape"),
     summary: z.string(),
     tags: z.array(z.string()).optional(),
     registrationLink: z.string().url().optional(),
@@ -44,6 +45,7 @@ const concertsCollection = defineCollection({
     title: z.string(),
     slug: z.string().optional(), // Auto-generated if not provided
     date: z.date(),
+    secondDate: z.date().optional(),
     speaker: z.string().optional(),
     series: z.string().optional(),
     location: z.string().optional(),

@@ -1,7 +1,7 @@
 ---
-import { formatDate } from "../../utils/dateUtils";
 import Button from "../UI/Button.astro";
 import type { CollectionEntry } from "astro:content";
+import { formatDateRange } from "../../utils/dateUtils";
 
 export interface Props {
   concert: CollectionEntry<"concerts">;
@@ -14,7 +14,7 @@ export interface Props {
 const {
   concert,
   className = "",
-  ctaText = "Watch/Listen",
+  ctaText = "View Details",
   imageSrc = concert.data.image || "/uploads/concert-placeholder.webp",
   showLocation = true,
 } = Astro.props;
@@ -57,7 +57,9 @@ const href = `/concerts/${concert.id}`;
             d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
           ></path>
         </svg>
-        <span>{formatDate(concert.data.date)}</span>
+        <span
+          >{formatDateRange(concert.data.date, concert.data.secondDate)}</span
+        >
       </div>
 
       {

@@ -67,35 +67,6 @@ if (entry.data.series) {
     <div class="container">
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
         <div class="lg:col-span-2">
-          {
-            entry.data.videoUrl && (
-              <div class="mb-8">
-                <h3 class="text-xl font-bold mb-4">Watch</h3>
-                <div class="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden">
-                  <iframe
-                    src={entry.data.videoUrl}
-                    title={entry.data.title}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                    class="w-full h-full"
-                  />
-                </div>
-              </div>
-            )
-          }
-
-          {
-            entry.data.audioUrl && (
-              <div class="mb-8">
-                <h3 class="text-xl font-bold mb-4">Listen</h3>
-                <audio controls class="w-full">
-                  <source src={entry.data.audioUrl} type="audio/mpeg" />
-                  Your browser does not support the audio element.
-                </audio>
-              </div>
-            )
-          }
-
           <div
             class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-h2:text-2xl prose-h3:text-xl prose-h4:text-lg prose-p:text-gray-700 prose-li:text-gray-700 prose-strong:text-gray-900 prose-a:text-primary-600 hover:prose-a:text-primary-700"
           >
