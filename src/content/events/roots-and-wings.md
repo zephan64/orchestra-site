@@ -3,7 +3,7 @@ title: "Roots & Wings"
 date: 2027-01-23
 location: "The Ipswich Community House"
 time: "6:30 PM"
-image: "/uploads/events/RootsAndWings.jpg"
+image: "/uploads/events/RootsAndWings2.jpg"
 imageOrientation: "portrait"
 summary: "*Roots & Wings* celebrates the extraordinary artistry of The Orchestra on the Hill’s musicians today while embracing the promise of the next generation. 
 
